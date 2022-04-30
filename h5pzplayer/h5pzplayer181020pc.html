@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link href="./css/video-js.css" rel="stylesheet">
+  <link href="./css/skin2.css" rel="stylesheet">
+  <script type="text/javascript" src="./js/jquery.js"></script>
+  <script type="text/javascript" src="./js/video.min.js"></script>
+  <script type="text/javascript" src="./js/prefixfree.min.js"></script>
+  <!--<script type="text/javascript" src="{maccms:path_tpl}js/video.skin.js"></script>-->
+  <script type="text/javascript" src="./js/videojs-contrib-hls.js"></script>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-80536726-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body style="width: 100%;height: 100%;">
+
+      <!--<video id="myVideo" class="video-js vjs-default-skin" controls autoplay="autoplay" preload="auto" data-setup='{}' style='width: 100%;height: auto'>-->
+        <!--<source id="source" src="[vod:newpalypath]" type="[vod:newplaytype]"></source>-->
+      <!--</video>-->
+      <div id="instructions">
+        <video id="my_video_1" autoplay="autoplay"  class="video-js vjs-sublime-skin vjs-16-9" controls preload="none" data-setup='{"playbackRates": [1, 1.5, 2] }'>
+          <source id="source" src="" type="[vod:newplaytype]"></source>
+        </video>
+	  </div>
+      <script type="text/javascript">
+          var url = window.parent.frames.MacPlayer.PlayUrl;
+          var arr = url.split('.');
+          var videotype = arr.pop();
+          var type = 'video/'+videotype;
+          var height = window.parent.frames.MacPlayer.Height;
+          $('#my_video_1').height = height;
+          if(videotype == 'm3u8') {
+              type = 'application/x-mpegURL';
+          }
+          window.onload=function()
+          {
+              $('#videohtml' , parent.document).attr('height' , $(document).height());
+              console.log(height);
+          }
+
+          $(function(){
+              $('#source').attr('src' , url);
+              $('#source').attr('type' , type);
+              var myPlayer = videojs('my_video_1');
+              $('#my_video_1').bind('contextmenu',function() { return false; });
+              videojs("my_video_1").ready(function () {
+                  var myPlayer = this;
+                  myPlayer.height(height);//设置高度：
+                  myPlayer.play();
+              });
+
+          });
+
+      </script>
+</body>
+</html>
